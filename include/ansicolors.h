@@ -1,4 +1,4 @@
-/// So I have clear names and not a wall of \033
+/** So I have clear names and not a wall of \033 */
 
 #ifndef ANSICOLORS_H
 #define ANSICOLORS_H

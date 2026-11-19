@@ -6,7 +6,7 @@
 #include "ansicolors.h"
 #include "array.h"
 
-// I am not dealing with Windows quirks for ANSI color codes
+/* I am not dealing with Windows quirks for ANSI color codes */
 #ifdef _WIN32
 #	define isatty(x) 0
 #else
@@ -22,8 +22,28 @@
  * 2 = Allocation error
  */
 int main(int argc, const char* argv[]) {
-	// Variables
+	/* Variables */
+	const char* argumentLookupTable[] = {
+		/** Functions */
+		"-a",
+		"/a",
+		"-s",
+		"/s",
+		"-m",
+		"/m",
+		"-d",
+		"/d",
+		/** Misc */
+		"-h",
+		"/h",
+		"--help",
+		"-V",
+		"/V",
+		"--version"
+	};
 	int STDERR_TTY = isatty(STDERR_FILENO);
+	int lookup = 0;
+
 	if (argc == 1) {
 		fprintf(stderr, "%s: %serror:%s %sno functions given%s\n",
 			argv[0],
@@ -42,103 +62,105 @@ int main(int argc, const char* argv[]) {
 		);
 		return 1;
 	}
-	const char* argumentLookupTable[] = {
-		/// Functions
-		"-a",
-		"/a",
-		"-s",
-		"/s",
-		"-m",
-		"/m",
-		"-d",
-		"/d",
-		/// Misc
-		"-h",
-		"/h",
-		"--help",
-		"-V",
-		"/V",
-		"--version"
-	};
 
-	// Read function
-	int lookup = findIndexOfString(
+	/* Read function */
+	lookup = findIndexOfString(
 		argumentLookupTable,
 		sizeof(argumentLookupTable) / sizeof(argumentLookupTable[0]),
 		argv[1]
 	);
 	switch (lookup) {
-		// Add
+		/* Add */
 		case 0: case 1: {
+			double* nums = NULL;
+			size_t len = 0;
+			double total = 0;
+
 			if (argc == 2) {
 				goto only_func;
 			}
 			if (argc == 3) {
 				goto only_one;
 			}
-			size_t len = (size_t)argc - 3;
-			double* nums = getDoubleArray(argv + 3, len);
-			double total = atof(argv[2]);
+			len = (size_t)argc - 3;
+			nums = getDoubleArray(argv + 3, len);
 			if (!nums) {
 				goto alloc_fail;
 			}
+			total = atof(argv[2]);
+
 			doArithmeticOnArray(+, nums, len, total);
 			free(nums);
 			printf("%g\n", total);
 			return 0;
 		}
-		// Subtract
+		/* Subtract */
 		case 2: case 3: {
+			double* nums = NULL;
+			size_t len = 0;
+			double total = 0;
+
 			if (argc == 2) {
 				goto only_func;
 			}
 			if (argc == 3) {
 				goto only_one;
 			}
-			size_t len = (size_t)argc - 3;
-			double* nums = getDoubleArray(argv + 3, len);
+			len = (size_t)argc - 3;
+			nums = getDoubleArray(argv + 3, len);
 			if (!nums) {
 				goto alloc_fail;
 			}
-			double total = atof(argv[2]);
+			total = atof(argv[2]);
+
 			doArithmeticOnArray(-, nums, len, total);
 			free(nums);
 			printf("%g\n", total);
 			return 0;
 		}
-		// Multiply
+		/* Multiply */
 		case 4: case 5: {
+			double* nums = NULL;
+			size_t len = 0;
+			double total = 0;
+
 			if (argc == 2) {
 				goto only_func;
 			}
 			if (argc == 3) {
 				goto only_one;
 			}
-			size_t len = (size_t)argc - 3;
-			double* nums = getDoubleArray(argv + 3, len);
+			len = (size_t)argc - 3;
+			nums = getDoubleArray(argv + 3, len);
 			if (!nums) {
 				goto alloc_fail;
 			}
-			double total = atof(argv[2]);
+			total = atof(argv[2]);
+
 			doArithmeticOnArray(*, nums, len, total);
 			free(nums);
 			printf("%g\n", total);
 			return 0;
 		}
-		// Divide
+		/* Divide */
 		case 6: case 7: {
+			double* nums = NULL;
+			size_t len = 0;
+			double total = 0;
+
 			if (argc == 2) {
 				goto only_func;
 			}
 			if (argc == 3) {
 				goto only_one;
 			}
-			size_t len = (size_t)argc - 3;
-			double* nums = getDoubleArray(argv + 3, len);
+			len = (size_t)argc - 3;
+			nums = getDoubleArray(argv + 3, len);
 			if (!nums) {
 				goto alloc_fail;
 			}
-			double total = atof(argv[2]);
+			total = atof(argv[2]);
+
 			doArithmeticOnArray(/, nums, len, total);
 			free(nums);
 			printf("%g\n", total);
@@ -178,13 +200,15 @@ int main(int argc, const char* argv[]) {
 			return 2;
 		}
 
-		// Help
+		/* Help */
 		case 8: case 9: case 10: {
 			printf("%s%s%s",
 				"Usage: ", argv[0], " <function> [arguments]\n"
 				"A stupid and detereministic shell calculator\n"
 				"Behavior of division by zero depends on OS implementation\n"
 				"Any numbers that are not in the format '123456.789' will be interpeted as 0\n\n"
+			);
+			puts(
 				"Examples:\n"
 				"compute -a 1 2       Add 1 and 2 (1 + 2 + 3)\n"
 				"compute -a 1 2 3     Add 1, 2, and 3 (1 + 2 + 3)\n"
@@ -197,11 +221,11 @@ int main(int argc, const char* argv[]) {
 				"-d, /d               Divides numbers\n"
 				"Miscellaneous\n"
 				"  -h, /h, --help     Prints this screen.\n"
-				"  -V, /V, --version  Prints version.\n"
+				"  -V, /V, --version  Prints version."
 			);
 			return 0;
 		}
-		// Version
+		/* Version */
 		case 11: case 12: case 13: {
 			puts(
 				"Compute (as in calculate) " PROJECT_VER "\n\n"
