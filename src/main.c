@@ -21,7 +21,7 @@
  * 1 = Bad input
  * 2 = Allocation error
  */
-int main(int argc, const char* argv[]) {
+int main(int argc, char* argv[]) {
 	/* Variables */
 	const char* argumentLookupTable[] = {
 		/** Functions */
@@ -83,7 +83,7 @@ int main(int argc, const char* argv[]) {
 				goto only_one;
 			}
 			len = (size_t)argc - 3;
-			nums = getDoubleArray(argv + 3, len);
+			nums = getDoubleArray((const char**)(argv + 3), len);
 			if (!nums) {
 				goto alloc_fail;
 			}
@@ -107,7 +107,7 @@ int main(int argc, const char* argv[]) {
 				goto only_one;
 			}
 			len = (size_t)argc - 3;
-			nums = getDoubleArray(argv + 3, len);
+			nums = getDoubleArray((const char**)(argv + 3), len);
 			if (!nums) {
 				goto alloc_fail;
 			}
@@ -131,7 +131,7 @@ int main(int argc, const char* argv[]) {
 				goto only_one;
 			}
 			len = (size_t)argc - 3;
-			nums = getDoubleArray(argv + 3, len);
+			nums = getDoubleArray((const char**)(argv + 3), len);
 			if (!nums) {
 				goto alloc_fail;
 			}
@@ -155,7 +155,7 @@ int main(int argc, const char* argv[]) {
 				goto only_one;
 			}
 			len = (size_t)argc - 3;
-			nums = getDoubleArray(argv + 3, len);
+			nums = getDoubleArray((const char**)(argv + 3), len);
 			if (!nums) {
 				goto alloc_fail;
 			}
