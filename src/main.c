@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
 		case 0: case 1: {
 			double* nums = NULL;
 			size_t len = 0;
-			double total = 0;
+			double total = 0.0;
 
 			if (argc == 2) {
 				goto only_func;
@@ -98,7 +98,7 @@ int main(int argc, char* argv[]) {
 		case 2: case 3: {
 			double* nums = NULL;
 			size_t len = 0;
-			double total = 0;
+			double total = 0.0;
 
 			if (argc == 2) {
 				goto only_func;
@@ -122,7 +122,7 @@ int main(int argc, char* argv[]) {
 		case 4: case 5: {
 			double* nums = NULL;
 			size_t len = 0;
-			double total = 0;
+			double total = 0.0;
 
 			if (argc == 2) {
 				goto only_func;
@@ -146,7 +146,7 @@ int main(int argc, char* argv[]) {
 		case 6: case 7: {
 			double* nums = NULL;
 			size_t len = 0;
-			double total = 0;
+			double total = 0.0;
 
 			if (argc == 2) {
 				goto only_func;
