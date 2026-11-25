@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 project(Computer
-	VERSION 1.0.0
+	VERSION 1.1.0
 	DESCRIPTION "A stupid and detereministic shell calculator"
 	HOMEPAGE_URL "https://github.com/MrSaturnIdk/compute"
 	LANGUAGES C
